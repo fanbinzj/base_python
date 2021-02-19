@@ -2,10 +2,11 @@ from tools.Tools import *
 
 
 class Stock:
-    def __init__(self, calculateAmount, calculateUnit, lotUnit, stockCode, stockId):
+    def __init__(self, calculateAmount, calculateUnit, lotUnit, stockCode, stockId, roundDown = True):
         self.calculateAmount = calculateAmount
         self.calculateUnit = calculateUnit
         self.lotUnit = lotUnit
+        self.roundDown = roundDown
 
         self.stockCode = stockCode
         self.stockId = stockId
@@ -14,7 +15,10 @@ class Stock:
         self.isMarginIpo = 1
 
     def generate_request_data(self, lots):
-        buy2Decimal = round_decimals_up(self.calculateAmount * lots / self.calculateUnit, 2)
+        if self.roundDown:
+            buy2Decimal = round_decimals_up(self.calculateAmount * lots / self.calculateUnit, 2)
+        else:
+            buy2Decimal = round(self.calculateAmount * lots / self.calculateUnit, 2)
         buyAmount = int(buy2Decimal * 1000)
         cashPart = int(round_decimals_up(buy2Decimal / 10, 2) * 1000)
         resultData = {
@@ -27,11 +31,13 @@ class Stock:
             "assetMargin": 0,
             "isMarginIpo": 1,
         }
-        print(str(resultData))
+        # print(str(resultData))
         return resultData
 
 
-Zhaoyanxinyao = Stock(152521627.00, 10000, 100, "06127", 1503)
+Saishengyaoye = Stock(94947238.00, 10000, 500, "06600", 1504, False)
+
+Zhaoyanxinyao = Stock(152521627.00, 10000, 500, "06127", 1503)
 
 requestBody = {
     "stockCode": "01024",
