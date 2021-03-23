@@ -2,11 +2,11 @@ from tools.Tools import *
 
 
 class Stock:
-    def __init__(self, calculateAmount, calculateUnit, lotUnit, stockCode, stockId, roundDown = True):
+    def __init__(self, calculateAmount, calculateUnit, lotUnit, stockCode, stockId, roundUp = True):
         self.calculateAmount = calculateAmount
         self.calculateUnit = calculateUnit
         self.lotUnit = lotUnit
-        self.roundDown = roundDown
+        self.roundUp = roundUp
 
         self.stockCode = stockCode
         self.stockId = stockId
@@ -15,7 +15,7 @@ class Stock:
         self.isMarginIpo = 1
 
     def generate_request_data(self, lots):
-        if self.roundDown:
+        if self.roundUp:
             buy2Decimal = round_decimals_up(self.calculateAmount * lots / self.calculateUnit, 2)
         else:
             buy2Decimal = round(self.calculateAmount * lots / self.calculateUnit, 2)
@@ -34,6 +34,22 @@ class Stock:
         # print(str(resultData))
         return resultData
 
+
+Bairongyun = Stock(160602243.0, 10000, 500, "06608", 1515)
+
+Meijiayin = Stock(2727207.9, 1000, 2000, "06939", 1512)
+
+Baidu = Stock(148986357.5, 10000, 50, "09888", 1510)
+
+Qichezhijia = Stock(254337388.6, 10000, 100, "02158", 1509)
+
+Guanglian = Stock(6818019.75, 2500, 5000, "01413", 1505)
+
+Jiujiuwang = Stock(3787788.75, 1000, 5000, "01927", 1506)
+
+Sensong = Stock(39595018.40, 10000, 1000, "02155", 1507)
+
+Zhaoyun = Stock(46463542.00, 10000, 500, "06601", 1508, False)
 
 Saishengyaoye = Stock(94947238.00, 10000, 500, "06600", 1504, False)
 

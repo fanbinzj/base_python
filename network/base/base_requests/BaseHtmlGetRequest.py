@@ -11,7 +11,7 @@ class BaseHtmlGetRequest(BaseRequest):
     def process_response(self):
         self.soup = BeautifulSoup(self.response.text, 'html.parser')
         self.process_html_soup_result()
-        return self.soup
+        return self.process_html_soup_result()
 
     def process_html_soup_result(self):
         pass

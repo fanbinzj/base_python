@@ -27,10 +27,13 @@ class ApplyDetailsRequest(BaseHtmlGetRequest):
         super().__init__(self.url + stock.stockCode, user.cookie, additional_headers)
 
     def process_html_soup_result(self):
-        target_script_string = self.soup(text=lambda t: "_params.csrf" in t)[0]
         try:
+            target_script_string = self.soup(text=lambda t: "_params.csrf" in t)[0]
             csrf_str = re.search('_params.csrf = \'(.+?)\';', target_script_string).group(1)
             self.user.csrf = csrf_str
         except AttributeError:
             # AAA, ZZZ not found in the original string
             csrf_str = 'ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'  # apply your error handling
+        except:
+            print("可能cookie过期了! Error during get stock details, cookie may exired!!!")
+            return -1
